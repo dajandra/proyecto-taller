@@ -1,0 +1,102 @@
+/* estilos.css */
+body {
+    font-family: Arial, sans-serif;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #f0f0f0;
+}
+
+td {
+    background-color: #fff;
+}
+
+button {
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #3e8e41;
+}
+
+#editar-reparacion-form {
+    width: 50%;
+    margin: 40px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#editar-reparacion-form label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+#editar-reparacion-form input, #editar-reparacion-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+}
+
+#editar-reparacion-form select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+}
+
+#ver-reparacion {
+    width: 50%;
+    margin: 40px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#ver-reparacion p {
+    margin-bottom: 20px;
+}
+
+table {
+    width: 90%; /* Ocupa el 90% del ancho de la pantalla */
+}
+
+th:first-child, td:first-child {
+    width: 1%; /* La columna de ID ocupa solo el ancho del texto */
+    white-space: nowrap; /* Evita que el texto se desborde */
+}
+
+td:nth-child(7) {
+    width: 1%; /* La columna de Presupuesto ocupa solo el ancho del texto */
+    white-space: nowrap; /* Evita que el texto se desborde */
+}
+
+.btn-info {
+    background-color: #337ab7;
+    border-color: #2e6da4;
+    color: #fff;
+}
+
+.btn-info:hover {
+    background-color: #23527c;
+    border-color: #1d4e73;
+}
