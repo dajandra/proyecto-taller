@@ -1,15 +1,11 @@
 # app.py
 from flask import Flask, render_template, request, redirect, url_for
-import sqlite3
+import mysql.connector
 import json
+from db import *
 
 app = Flask(__name__)
-
-# Conexión a la base de datos
-conn = sqlite3.connect('taller_motos.db')
-cursor = conn.cursor()
-
-class Reparacion:
+""" class Reparacion:
     def __init__(self, patente, fecha_ingreso, fecha_egreso, descripcion, presupuesto, estado):
         self.patente = patente
         self.fecha_ingreso = fecha_ingreso
@@ -52,47 +48,26 @@ class Reparacion:
         ''', (self.patente, self.fecha_ingreso, self.fecha_egreso, self.descripcion, self.presupuesto, self.estado, self.id))
 
     def delete(self, cursor):
-        cursor.execute('DELETE FROM reparaciones WHERE id = ?', (self.id,))
+        cursor.execute('DELETE FROM reparaciones WHERE id = ?', (self.id,))"""
 
 @app.route('/')
 def index():
-    conn = sqlite3.connect('taller_motos.db')
-    cursor = conn.cursor()
-    cursor.execute('''
-    SELECT r.id, r.patente, r.fecha_ingreso, r.fecha_egreso, r.descripcion, r.presupuesto, r.estado, c.nombre_apellido
-    FROM reparaciones r
-    JOIN vehiculos v ON r.patente = v.patente
-    JOIN clientes c ON v.patente = c.vehiculo_patente;
-''')
-    reparaciones = cursor.fetchall()
-    conn.close()
-    reparaciones = [
-        {'id': r[0], 'patente': r[1], 'fecha_ingreso': r[2], 'fecha_egreso': r[3], 'descripcion': r[4], 'presupuesto': r[5], 'estado': r[6], 'nombre_apellido': r[7]}
-        for r in reparaciones
-    ]
+    reparaciones = show_reparaciones()
     return render_template('index.html', reparaciones=reparaciones)
 
 @app.route('/nueva_reparacion', methods=['POST'])
 def nueva_reparacion():
-    conn = sqlite3.connect('taller_motos.db')
-    cursor = conn.cursor()
-    reparacion = Reparacion(
-        patente=request.form['patente'],
-        fecha_ingreso=request.form['fecha_ingreso'],
-        fecha_egreso=request.form['fecha_egreso'],
-        descripcion=request.form['descripcion'],
-        presupuesto=request.form['presupuesto'],
-        estado=request.form['estado']
-    )
-    reparacion.save(cursor)
-    conn.commit()
-    conn.close()
+    patente=request.form['patente'],
+    fecha_ingreso=request.form['fecha_ingreso'],
+    fecha_egreso=request.form['fecha_egreso'],
+    descripcion=request.form['descripcion'],
+    presupuesto=request.form['presupuesto'],
+    estado=request.form['estado']
+    insert_reparaciones(patente, fecha_ingreso, fecha_egreso, descripcion, presupuesto, estado)
     return redirect(url_for('index'))
 
-@app.route('/editar_reparacion/<int:id>', methods=['POST'])
+'''@app.route('/editar_reparacion/<int:id>', methods=['POST'])
 def editar_reparacion(id):
-    conn = sqlite3.connect('taller_motos.db')
-    cursor = conn.cursor()
     reparacion = Reparacion.get_by_id(id, cursor)
     reparacion.patente = request.form['patente']
     reparacion.fecha_ingreso = request.form['fecha_ingreso']
@@ -100,12 +75,9 @@ def editar_reparacion(id):
     reparacion.descripcion = request.form['descripcion']
     reparacion.presupuesto = request.form['presupuesto']
     reparacion.estado = request.form['estado']
-    reparacion.update(cursor)
-    conn.commit()
-    conn.close()
-    return redirect(url_for('index'))
+    return redirect(url_for('index'))'''
 
-@app.route('/eliminar_reparacion/<int:id>')
+'''@app.route('/eliminar_reparacion/<int:id>')
 def eliminar_reparacion(id):
     conn = sqlite3.connect('taller_motos.db')
     cursor = conn.cursor()
@@ -113,16 +85,8 @@ def eliminar_reparacion(id):
     reparacion.delete(cursor)
     conn.commit()
     conn.close()
-    return redirect(url_for('index'))
+    return redirect(url_for('index'))'''
 
 if __name__ == '__main__':
-    app.run(debug=True)
-
-
-
-@app.route('/reparaciones/estado', methods=['GET'])
-def get_reparaciones_por_estado():
-    estado = request.args.get('estado')
-    reparaciones = Reparacion.query.filter_by(estado=estado).all()
-    data = [reparacion.to_dict() for reparacion in reparaciones]
-    return json.dumps(data), 200, {'Content-Type': 'application/json'}
+    app.run(debug=True, port=8080)
+    
