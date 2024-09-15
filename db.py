@@ -43,3 +43,28 @@ def editar_reparacion(id, patente, fecha_ingreso, fecha_egreso, descripcion, pre
     cursor.close()
     conexion.close()
     return
+
+def eliminar_reparacion(id):
+    conexion = BaseDeDatos()
+    cursor = conexion.cursor(dictionary=True)
+    
+    cursor.execute('''
+        DELETE FROM reparaciones
+        WHERE id = %s
+    ''', (id,))
+    
+    conexion.commit()
+    cursor.close()
+    conexion.close()
+    return
+
+def registrar_usuario(nombre_usuario, contraseña_hasheada):
+    conexion = BaseDeDatos()
+    cursor = conexion.cursor()
+    cursor.execute('''
+        INSERT INTO usuarios (nombre_usuario, contraseña)
+        VALUES (%s, %s)
+    ''', (nombre_usuario, contraseña_hasheada))
+    conexion.commit()
+    cursor.close()
+    conexion.close()
