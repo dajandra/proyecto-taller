@@ -96,3 +96,9 @@ $("#estado-dropdown ul li a").on("click", function() {
 
 // Filtrar reparaciones por defecto (Todo)
 filtrarReparaciones("todo");
+
+document.addEventListener("DOMContentLoaded", function() {
+    document.querySelector("a[href='nueva_reparacion.html']").addEventListener("click", function() {
+        window.location.href = "nueva_reparacion.html";
+    });
+});

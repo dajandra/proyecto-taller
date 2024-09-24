@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Nueva Reparación</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/css/estilos.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Nueva Reparación</h2>
+        <form action="" method="post">
+            <div class="form-group">
+                <label for="patente">Patente:</label>
+                <input type="text" class="form-control" id="patente" name="patente" required>
+            </div>
+            <div class="form-group">
+                <label for="fecha_ingreso">Fecha de Ingreso:</label>
+                <input type="date" class="form-control" id="fecha_ingreso" name="fecha_ingreso" required>
+            </div>
+            <div class="form-group">
+                <label for="fecha_egreso">Fecha de Egreso:</label>
+                <input type="date" class="form-control" id="fecha_egreso" name="fecha_egreso" required>
+            </div>
+            <div class="form-group">
+                <label for="descripcion">Descripción:</label>
+                <textarea class="form-control" id="descripcion" name="descripcion" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="presupuesto">Presupuesto:</label>
+                <input type="number" class="form-control" id="presupuesto" name="presupuesto" required>
+            </div>
+            <div class="form-group">
+                <label for="estado">Estado:</label>
+                <select class="form-control" id="estado" name="estado" required>
+                    <option value="sin empezar">Sin Empezar</option>
+                    <option value="en proceso">En Proceso</option>
+                    <option value="finalizado">Finalizado</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Crear Reparación</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -72,22 +72,6 @@ def index():
     ]
     return render_template('index.html', reparaciones=reparaciones)
 
-@app.route('/nueva_reparacion', methods=['POST'])
-def nueva_reparacion():
-    conn = sqlite3.connect('taller_motos.db')
-    cursor = conn.cursor()
-    reparacion = Reparacion(
-        patente=request.form['patente'],
-        fecha_ingreso=request.form['fecha_ingreso'],
-        fecha_egreso=request.form['fecha_egreso'],
-        descripcion=request.form['descripcion'],
-        presupuesto=request.form['presupuesto'],
-        estado=request.form['estado']
-    )
-    reparacion.save(cursor)
-    conn.commit()
-    conn.close()
-    return redirect(url_for('index'))
 
 @app.route('/editar_reparacion/<int:id>', methods=['POST'])
 def editar_reparacion(id):
@@ -126,3 +110,27 @@ def get_reparaciones_por_estado():
     reparaciones = Reparacion.query.filter_by(estado=estado).all()
     data = [reparacion.to_dict() for reparacion in reparaciones]
     return json.dumps(data), 200, {'Content-Type': 'application/json'}
+
+@app.route('/nueva_reparacion', methods=['GET', 'POST'])
+def nueva_reparacion():
+    if request.method == 'POST':
+        patente = request.form['patente']
+        fecha_ingreso = request.form['fecha_ingreso']
+        fecha_egreso = request.form['fecha_egreso']
+        descripcion = request.form['descripcion']
+        presupuesto = request.form['presupuesto']
+        estado = request.form['estado']
+        
+        # Crear una nueva reparación en la base de datos
+        conn = sqlite3.connect('taller_motos.db')
+        cursor = conn.cursor()
+        cursor.execute('''
+            INSERT INTO reparaciones (patente, fecha_ingreso, fecha_egreso, descripcion, presupuesto, estado)
+            VALUES (?, ?, ?, ?, ?, ?)
+        ''', (patente, fecha_ingreso, fecha_egreso, descripcion, presupuesto, estado))
+        conn.commit()
+        conn.close()
+        
+        # Redirigir a la página principal
+        return redirect(url_for('index'))
+    return render_template('nueva_reparacion.html')
